@@ -1,4 +1,10 @@
 const mongoose = require("mongoose");
+const dns = require("dns");
+
+// Force Node's internal DNS resolver to use Google + Cloudflare DNS.
+// Fixes "querySrv ECONNREFUSED" seen on some ISPs (notably Jio) where
+// Node's c-ares resolver fails even though the OS's own DNS (nslookup) works fine.
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 const connectDB = async () => {
   try {
